@@ -22,7 +22,7 @@ import showToast from "@calcom/ui/v2/core/notifications";
 import { SkeletonContainer, SkeletonText, SkeletonButton, SkeletonAvatar } from "@calcom/ui/v2/core/skeleton";
 
 import TwoFactor from "@components/auth/TwoFactor";
-import { UsernameAvailability, UsernameAvailabilityField } from "@components/ui/UsernameAvailability";
+import { UsernameAvailabilityField } from "@components/ui/UsernameAvailability";
 
 const SkeletonLoader = () => {
   return (
@@ -238,23 +238,6 @@ const ProfileView = () => {
             onSuccessMutation={onSuccessfulUsernameUpdate}
             onErrorMutation={onErrorInUsernameUpdate}
           />
-          {/* <Controller
-            control={formMethods.control}
-            name="username"
-            render={({ field: { ref, onChange, value } }) => {
-              return (
-                <UsernameAvailability
-                  currentUsername={user?.username || ""}
-                  inputUsernameValue={value}
-                  usernameRef={ref}
-                  setInputUsernameValue={onChange}
-                  onSuccessMutation={onSuccessfulUsernameUpdate}
-                  onErrorMutation={onErrorInUsernameUpdate}
-                  user={user}
-                />
-              );
-            }}
-          /> */}
         </div>
         <div className="mt-8">
           <TextField label={t("full_name")} {...formMethods.register("name")} />
