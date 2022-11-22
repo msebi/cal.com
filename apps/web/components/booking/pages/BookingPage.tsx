@@ -301,14 +301,17 @@ const BookingPage = ({
   const bookEvent = (booking: BookingFormValues) => {
     const bookingCustomInputs = Object.keys(booking.customInputs || {}).map((inputId) => ({
       label: eventType.customInputs.find((input) => input.id === parseInt(inputId))?.label || "",
-      value: booking.customInputs && inputId in booking.customInputs ? booking.customInputs[inputId] : "",
+      value:
+        booking.customInputs && inputId in booking.customInputs && booking.customInputs[inputId]
+          ? booking.customInputs[inputId]
+          : "",
     }));
 
     // Check if custom input of type Phone number is valid
     const customInputsWithPhoneNumberType = eventType.customInputs.filter(
       (customInput) => customInput.type === EventTypeCustomInputType.PHONE
     );
-    console.log(customInputsWithPhoneNumberType);
+
     if (customInputsWithPhoneNumberType.length) {
       let isErrorFound = false;
       customInputsWithPhoneNumberType.forEach((customInput) => {
@@ -376,10 +379,7 @@ const BookingPage = ({
           attendeeAddress: booking.attendeeAddress,
         }),
         metadata,
-        customInputs: Object.keys(booking.customInputs || {}).map((inputId) => ({
-          label: eventType.customInputs.find((input) => input.id === parseInt(inputId))?.label || "",
-          value: booking.customInputs && inputId in booking.customInputs ? booking.customInputs[inputId] : "",
-        })),
+        customInputs: bookingCustomInputs,
         hasHashedBookingLink,
         hashedLink,
         smsReminderNumber:
@@ -407,10 +407,7 @@ const BookingPage = ({
           attendeeAddress: booking.attendeeAddress,
         }),
         metadata,
-        customInputs: Object.keys(booking.customInputs || {}).map((inputId) => ({
-          label: eventType.customInputs.find((input) => input.id === parseInt(inputId))?.label || "",
-          value: booking.customInputs && inputId in booking.customInputs ? booking.customInputs[inputId] : "",
-        })),
+        customInputs: bookingCustomInputs,
         hasHashedBookingLink,
         hashedLink,
         smsReminderNumber:
@@ -454,8 +451,6 @@ const BookingPage = ({
       ? ("rainbow" as Gate)
       : undefined,
   ];
-
-  console.log(bookingForm.formState);
 
   return (
     <Gates gates={gates} appData={rainbowAppData} dispatch={gateDispatcher}>
